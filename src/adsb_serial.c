@@ -28,11 +28,17 @@ int SERIAL_open(void){
 	int fd = 0;
 	int pos = 0;
 
+	fd = open(SERIALPORTS[pos], O_RDWR | O_NOCTTY);
+	if(fd < 0){
+		perror(SERIALPORTS[pos]);
+		printf("Trying to get MicroADSB_Colector...\n");
+	}
+
 	do{
 		fd = open(SERIALPORTS[pos], O_RDWR | O_NOCTTY);
 
 		if(fd < 0){
-			perror(SERIALPORTS[pos]);
+			//perror(SERIALPORTS[pos]);
 			pos++;
 			pos = pos % 3;
 			usleep(500);
